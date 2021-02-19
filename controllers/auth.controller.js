@@ -2,45 +2,32 @@ const { request, response } = require('express');
 const { validationResult } = require('express-validator');
 
 
-const crearUsuario = (request, response) => {
+//Controlador de la ruta de register
+const crearUsuario = (req = request, resp = response) => {
 
-    const errors = validationResult(request);
-    if(!errors.isEmpty()){ 
-        return response.status(400).json({
-            ok: false,
-            errors: errors.mapped()
-        });
-    }
-
-    const { names, email, password } = request.body;
+    const { names, email, password } = req.body;
     console.log(names, email, password);
 
-    return response.json({
+    return resp.json({
         status: true,
         msg: ' Esta ruta creara a los usuarios'
     })
 };
 
-const loginUsuario = (request, response) => {
+//Controlador de la ruta de login
+const loginUsuario = (req = request, resp = response) => {
 
-    const errors = validationResult(request);
-    if(!errors.isEmpty()){ 
-        return response.status(400).json({
-            ok: false,
-            errors: errors.mapped()
-        });
-    }
-
-    const { email, password } = request.body;
+    const { email, password } = req.body;
     console.log(email, password);
 
-    return response.json({
+    return resp.json({
         status: true,
         msg: ' Esta ruta logeara a los usuarios'
     })
 }
 
-const revalidarToken = (request, response) => {
+//Controlador de la ruta de validar token
+const revalidarToken = (req = request, resp = response) => {
     return response.json({
         status: true,
         msg: ' Esta ruta validará los JWT'
@@ -48,6 +35,7 @@ const revalidarToken = (request, response) => {
 }
 
 
+//Exportacion de los controllers
 module.exports = {
     crearUsuario,
     loginUsuario,
