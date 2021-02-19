@@ -1,30 +1,16 @@
 const { Router } = require('express');
+const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth.controller');
 
 const router = Router();
 
 //Crear usuarios
-router.post('/register', (req, res) => {
-    return res.json({
-        status: true,
-        msg: ' Esta ruta creara a los usuarios'
-    })
-});
+router.post('/register', crearUsuario);
 
 //Login usuarios
-router.post('/login', (req, res) => {
-    return res.json({
-        status: true,
-        msg: ' Esta ruta logeara a los usuarios'
-    })
-});
-
+router.post('/login', loginUsuario);
 
 //Validar y revalidar el JWT
-router.post('/valid', (req, res) => {
-    return res.json({
-        status: true,
-        msg: ' Esta ruta validará los JWT'
-    })
-});
+router.post('/valid', revalidarToken);
+
 
 module.exports = router;
