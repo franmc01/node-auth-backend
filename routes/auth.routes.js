@@ -5,7 +5,14 @@ const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/a
 const router = Router();
 
 //Crear usuarios
-router.post('/register',crearUsuario);
+router.post('/register',[ 
+    check('names').notEmpty().withMessage('Los nombres son obligatorios'),
+    check('email').notEmpty().withMessage('El email es obligatorio')
+                             .matches('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$').withMessage('El correo a registrar no es válido'),
+    check('password').notEmpty().withMessage('La contraseña de su cuenta es obligatoria')
+                     .isStrongPassword().withMessage('La contraseña debe tener 8 caracteres minimos con múmeros, letras y simbolos')
+
+],crearUsuario);
 
 //Login usuarios
 router.post('/login', [
