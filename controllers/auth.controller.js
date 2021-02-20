@@ -1,5 +1,6 @@
 const { request, response } = require('express');
 const Usuario = require('../models/Usuario.model');
+const bcrypt = require('bcryptjs');
 
 
 //Controlador de la ruta de register
@@ -23,7 +24,8 @@ const crearUsuario = async (req = request, resp = response) => {
         const dbusuario = new Usuario( { email, name, password });
 
         //Encriptar la contraseña
-
+        const salt = bcrypt.genSaltSync();
+        dbusuario.password = bcrypt.hashSync(password, salt);
 
         //Generar el JWT
 
