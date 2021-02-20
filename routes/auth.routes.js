@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth.controller');
 const { validarCampos } = require('../middlewares/validarCampos.middleware');
+const { validarJWT } = require('../middlewares/validarJWT.middleware');
 
 const router = Router();
 
@@ -33,7 +34,7 @@ router.post('/login', [
 ], loginUsuario);
 
 //Validar y revalidar el JWT
-router.post('/valid', revalidarToken);
+router.post('/valid', validarJWT , revalidarToken);
 
 
 //Exportación de la rutas de Auth

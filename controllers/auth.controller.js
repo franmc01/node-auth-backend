@@ -102,12 +102,21 @@ const loginUsuario = async (req, resp = response) => {
     }
 }
 
-//Controlador de la ruta de validar token
-const revalidarToken = (req = request, resp = response) => {
-    return response.json({
+//Controlador de la ruta de validar token cada vez que se requiera
+const revalidarToken = async (req = request, resp = response) => {
+
+    //Recibo la información que me envia el middleware
+    const { uid, name } = req;
+
+    // Generar un nuevo JWT
+    const token = await generarJWT( uid, name );
+
+    return resp.json({
         ok: true,
-        msg: ' Esta ruta validará los JWT'
-    })
+        uid, 
+        name: name,
+        _token: token
+    });
 }
 
 
