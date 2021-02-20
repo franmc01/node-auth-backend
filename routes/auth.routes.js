@@ -8,7 +8,7 @@ const router = Router();
 //Crear usuarios
 router.post('/register',[ 
     //Validacion de los campos
-    check('names').notEmpty().withMessage('Los nombres son obligatorios'),
+    check('name').notEmpty().withMessage('Los nombres son obligatorios'),
 
     check('email').notEmpty().withMessage('El email es obligatorio')
                   .matches('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$').withMessage('El correo a registrar no es válido'),

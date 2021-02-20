@@ -1,17 +1,50 @@
 const { request, response } = require('express');
-const { validationResult } = require('express-validator');
+const Usuario = require('../models/Usuario.model');
 
 
 //Controlador de la ruta de register
-const crearUsuario = (req = request, resp = response) => {
+const crearUsuario = async (req = request, resp = response) => {
+    //Recepcion de los campos
+    const { name, email, password } = req.body;
 
-    const { names, email, password } = req.body;
-    console.log(names, email, password);
+    try {
 
-    return resp.json({
-        status: true,
-        msg: ' Esta ruta creara a los usuarios'
-    })
+        //Verificar el email en la base de datos
+        const usuario = await Usuario.findOne({ email });
+
+        if(usuario) {
+            return resp.status(400).json({
+                ok:false,
+                msg: 'El email ingresado ya existe en la BD, intente con otro'
+            });
+        }
+
+        //Crear usuario haciendo uso del userSchema
+        const dbusuario = new Usuario( { email, name, password });
+
+        //Encriptar la contraseña
+
+
+        //Generar el JWT
+
+
+        //Guardar el usuario en la base de datos
+        await dbusuario.save();
+
+        //Generar la respuesta exitosa
+        return resp.status(201).json({
+            ok:true,
+            uid: dbusuario.id,
+            name,
+            token: "Aqui va el token"
+        });
+
+    } catch (error) {
+        return resp.status(500).json({
+            ok: true,
+            msg: 'Error en servidor, contacte al administrador'
+        })
+    }
 };
 
 //Controlador de la ruta de login
