@@ -1,6 +1,7 @@
 const { request, response } = require('express');
 const Usuario = require('../models/Usuario.model');
 const bcrypt = require('bcryptjs');
+const { generarJWT } = require('../helpers/jwt.helper');
 
 
 //Controlador de la ruta de register
@@ -28,7 +29,7 @@ const crearUsuario = async (req = request, resp = response) => {
         dbusuario.password = bcrypt.hashSync(password, salt);
 
         //Generar el JWT
-
+        const token = await generarJWT(dbusuario.id, name);
 
         //Guardar el usuario en la base de datos
         await dbusuario.save();
@@ -38,7 +39,7 @@ const crearUsuario = async (req = request, resp = response) => {
             ok:true,
             uid: dbusuario.id,
             name,
-            token: "Aqui va el token"
+            _token: token
         });
 
     } catch (error) {
