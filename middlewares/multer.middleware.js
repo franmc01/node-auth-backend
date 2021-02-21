@@ -3,7 +3,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 uuidv4();
 const storage = multer.diskStorage({
-    destination: path.join(__dirname, '../uploads'),
+    destination: path.join(__dirname, '../public/uploads'),
     filename: (req, file, cb) => {
         const extension = file.originalname.split('.')
         const fileFinal = `${uuidv4()}.${extension[extension.length -1]}`
@@ -20,12 +20,12 @@ const fileFilter = (req, file, cb) => {
     if (mimetype && extname) {
         return cb(null, true);
     }else{
-        return cb(null, false);
+        return cb(null, false)
     }
 };
 
 const upload = multer({
-    dest: path.join(__dirname, '../uploads'),
+    dest: path.join(__dirname, '../public/uploads/'),
     fileFilter,
     storage,
 })

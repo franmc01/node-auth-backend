@@ -7,9 +7,8 @@ const { generarJWT } = require('../helpers/jwt.helper');
 //Controlador de la ruta de register
 const crearUsuario = async (req = request, resp = response) => {
 
-    console.log(req.file);
-
     //Recepcion de los campos
+    const img = req.file;
     const { name, email, password } = req.body;
 
     try {
@@ -25,7 +24,7 @@ const crearUsuario = async (req = request, resp = response) => {
         }
 
         //Crear usuario haciendo uso del userSchema
-        const dbUsuario = new Usuario({ email, name, password });
+        const dbUsuario = new Usuario({ email, name, password, avatar: img.filename });
 
         //Encriptar la contraseña
         const salt = bcrypt.genSaltSync();
@@ -46,6 +45,8 @@ const crearUsuario = async (req = request, resp = response) => {
         });
 
     } catch (error) {
+        console.log(error);
+
         return resp.status(500).json({
             ok: true,
             msg: 'Error en servidor, contacte al administrador'
