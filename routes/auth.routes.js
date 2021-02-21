@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth.controller');
+const upload = require('../middlewares/multer.middleware');
 const { validarCampos } = require('../middlewares/validarCampos.middleware');
 const { validarJWT } = require('../middlewares/validarJWT.middleware');
 
@@ -8,6 +9,8 @@ const router = Router();
 
 //Crear usuarios
 router.post('/register',[ 
+
+    upload.single('avatar'),
     //Validacion de los campos
     check('name').notEmpty().withMessage('Los nombres son obligatorios'),
 

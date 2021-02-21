@@ -7,6 +7,8 @@ const { generarJWT } = require('../helpers/jwt.helper');
 //Controlador de la ruta de register
 const crearUsuario = async (req = request, resp = response) => {
 
+    console.log(req.file);
+
     //Recepcion de los campos
     const { name, email, password } = req.body;
 
