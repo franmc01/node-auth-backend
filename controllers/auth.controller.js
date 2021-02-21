@@ -41,6 +41,7 @@ const crearUsuario = async (req = request, resp = response) => {
             ok: true,
             uid: dbUsuario.id,
             name,
+            avatar: img.filename,
             _token: token
         });
 
@@ -56,11 +57,9 @@ const crearUsuario = async (req = request, resp = response) => {
 
 //Controlador de la ruta de login
 const loginUsuario = async (req, resp = response) => {
-    console.log('Llegamos');
 
     //Recepcion de los campos
     const { email, password } = req.body;
-    console.log(email, password);
 
     try {
 
@@ -93,6 +92,7 @@ const loginUsuario = async (req, resp = response) => {
             msg: 'Acceso correcto',
             uid: dbUsuario.id,
             name: dbUsuario.name,
+            avatar: dbUsuario.avatar,
             _token: token
         })
 

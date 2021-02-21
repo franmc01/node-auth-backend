@@ -2,6 +2,7 @@
 const express = require('express');
 const router = require('./routes/auth.routes');
 const cors = require('cors');
+const path = require('path');
 const { dbConnection } = require('./database/config.database');
 require('dotenv').config()
 
@@ -16,6 +17,8 @@ app.use(cors());
 
 //Configuracion del bodyParser
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, 'public')))
 
 //Configuración de las rutas
 app.get('/', (req, res) => {
