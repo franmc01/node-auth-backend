@@ -17,7 +17,7 @@ const userSchema = new Schema({
     },
     avatar: {
         type: String,
-        default: 'hola'
+        default: 'https://www.wallchase.com/assets/img/no-pic.jpg'
     }
 });
 

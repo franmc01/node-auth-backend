@@ -49,7 +49,7 @@ const crearUsuario = async (req = request, resp = response) => {
         console.log(error);
 
         return resp.status(500).json({
-            ok: true,
+            ok: false,
             msg: 'Error en servidor, contacte al administrador'
         });
     }
@@ -69,7 +69,7 @@ const loginUsuario = async (req, resp = response) => {
         //Si no existe, rechazar la petición
         if (!dbUsuario) {
             return resp.status(400).json({
-                ok: true,
+                ok: false,
                 msg: 'El usuario no existe en nuestra BD'
             });
         }
@@ -80,7 +80,7 @@ const loginUsuario = async (req, resp = response) => {
         //Si las credenciales son incorrectas, rechazar la petición
         if (!validPassword) {
             return resp.status(400).json({
-                ok: true,
+                ok: false,
                 msg: 'Credenciales de usuario incorrectas'
             });
         }
@@ -99,7 +99,7 @@ const loginUsuario = async (req, resp = response) => {
     } catch (error) {
         console.log(error);
         return resp.status(500).json({
-            ok: true,
+            ok: false,
             msg: 'Error en servidor, contacte al administrador'
         })
     }
