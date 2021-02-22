@@ -1,6 +1,12 @@
 const { request, response } = require('express');
 const Usuario = require('../models/Usuario.model');
 const bcrypt = require('bcryptjs');
+const cloudinary = require('cloudinary').v2
+cloudinary.config({ 
+    cloud_name: 'cloudfrancisco',
+    api_key: '194556868641438',
+    api_secret: 'yK5OygE_p6-RMwLn5QYy0FJD5Uc'
+})
 const { generarJWT } = require('../helpers/jwt.helper');
 
 
@@ -16,6 +22,8 @@ const crearUsuario = async (req = request, resp = response) => {
         //Verificar el email en la base de datos
         const usuario = await Usuario.findOne({ email });
 
+        const { secure_url } = await cloudinary.uploader.upload(img.path)
+
         if (usuario) {
             return resp.status(400).json({
                 ok: false,
@@ -24,7 +32,7 @@ const crearUsuario = async (req = request, resp = response) => {
         }
 
         //Crear usuario haciendo uso del userSchema
-        const dbUsuario = new Usuario({ email, name, password, avatar: img.filename });
+        const dbUsuario = new Usuario({ email, name, password, avatar: secure_url });
 
         //Encriptar la contraseña
         const salt = bcrypt.genSaltSync();
@@ -41,7 +49,7 @@ const crearUsuario = async (req = request, resp = response) => {
             ok: true,
             uid: dbUsuario.id,
             name,
-            avatar: img.filename,
+            avatar: dbUsuario.avatar,
             _token: token
         });
 
